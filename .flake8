@@ -1,0 +1,9 @@
+[flake8]
+ignore = E501, E402
+max-line-length = 120
+exclude = tests/*, docs/*
+select = E, W
+show-source = True
+format = default
+count = True
+statistics = True

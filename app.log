@@ -1,0 +1,25 @@
+[2025-01-15 11:06:55] [INFO] [app] [app.py] [Line: 181] Starting Flask app...
+[2025-01-15 11:06:55] [INFO] [app] [app.py] [Line: 181] Starting Flask app...
+[2025-01-15 11:07:13] [INFO] [app] [app.py] [Line: 105] Accessed home page
+[2025-01-15 11:07:21] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='bbb'
+[2025-01-15 11:07:21] [WARNING] [app] [app.py] [Line: 125] Login failed for user: aaa
+[2025-01-15 11:07:53] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='test' AND password='test123'
+[2025-01-15 11:07:53] [INFO] [app] [app.py] [Line: 122] Login successful for user: test
+[2025-01-15 11:07:58] [INFO] [app] [app.py] [Line: 140] Search query: SELECT username FROM users WHERE username LIKE '%aaa%'
+[2025-01-15 11:07:58] [INFO] [app] [app.py] [Line: 148] No search results found.
+[2025-01-15 11:08:04] [INFO] [app] [app.py] [Line: 140] Search query: SELECT username FROM users WHERE username LIKE '%test%'
+[2025-01-15 11:08:04] [INFO] [app] [app.py] [Line: 145] Search results: ['test', 'test']
+[2025-01-15 11:24:32] [INFO] [app] [app.py] [Line: 105] Accessed home page
+[2025-01-15 11:25:24] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='test' AND password='test'
+[2025-01-15 11:25:24] [WARNING] [app] [app.py] [Line: 125] Login failed for user: test
+[2025-01-16 10:10:41] [INFO] [app] [app.py] [Line: 105] Accessed home page
+[2025-01-16 10:10:48] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='test' AND password='test'
+[2025-01-16 10:10:48] [WARNING] [app] [app.py] [Line: 125] Login failed for user: test
+[2025-01-16 10:10:55] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='test' AND password='test123'
+[2025-01-16 10:10:55] [INFO] [app] [app.py] [Line: 122] Login successful for user: test
+[2025-01-16 10:11:01] [INFO] [app] [app.py] [Line: 140] Search query: SELECT username FROM users WHERE username LIKE '%test%'
+[2025-01-16 10:11:01] [INFO] [app] [app.py] [Line: 145] Search results: ['test', 'test']
+[2025-01-16 10:11:11] [INFO] [app] [app.py] [Line: 164] Registration attempt with query: INSERT INTO users (username, password) VALUES ('aaa', 'bbb')
+[2025-01-16 10:11:11] [INFO] [app] [app.py] [Line: 172] User aaa registered successfully.
+[2025-01-16 10:11:18] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='bbb'
+[2025-01-16 10:11:18] [INFO] [app] [app.py] [Line: 122] Login successful for user: aaa
