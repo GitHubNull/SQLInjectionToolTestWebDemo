@@ -23,3 +23,30 @@
 [2025-01-16 10:11:11] [INFO] [app] [app.py] [Line: 172] User aaa registered successfully.
 [2025-01-16 10:11:18] [INFO] [app] [app.py] [Line: 117] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='bbb'
 [2025-01-16 10:11:18] [INFO] [app] [app.py] [Line: 122] Login successful for user: aaa
+[2025-02-06 17:16:05] [INFO] [app] [app.py] [Line: 211] Starting Flask app...
+[2025-02-06 17:16:48] [INFO] [app] [app.py] [Line: 123] Accessed home page
+[2025-02-06 17:16:52] [INFO] [app] [app.py] [Line: 117] Difficulty level set to: 5
+[2025-02-06 17:17:01] [INFO] [app] [app.py] [Line: 149] Login attempt with query: SELECT * FROM users WHERE username='a' AND password='bbb' AND id % 2 = 0 AND password != '' AND username != '' AND id > 0
+[2025-02-06 17:17:01] [WARNING] [app] [app.py] [Line: 157] Login failed for user: a
+[2025-02-06 17:17:27] [INFO] [app] [app.py] [Line: 149] Login attempt with query: SELECT * FROM users WHERE username='a' AND password='bbb' AND id % 2 = 0 AND id > 0 AND password != '' AND username != ''
+[2025-02-06 17:17:27] [WARNING] [app] [app.py] [Line: 157] Login failed for user: a
+[2025-02-06 17:18:36] [INFO] [app] [app.py] [Line: 149] Login attempt with query: SELECT * FROM users WHERE username='a' AND password='bbb' AND id % 2 = 0
+[2025-02-06 17:18:36] [WARNING] [app] [app.py] [Line: 157] Login failed for user: a
+[2025-02-06 17:39:08] [INFO] [app] [app.py] [Line: 224] Starting Flask app...
+[2025-02-06 17:39:14] [INFO] [app] [app.py] [Line: 128] Accessed home page
+[2025-02-06 17:39:18] [INFO] [app] [app.py] [Line: 122] Difficulty level set to: 9
+[2025-02-06 17:39:26] [INFO] [app] [app.py] [Line: 162] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='1' AND length(username) > 3 AND id > 0 AND username LIKE 'a%' AND id % 2 = 0 AND username != '' AND password != ''
+[2025-02-06 17:39:26] [WARNING] [app] [app.py] [Line: 170] Login failed for user: aaa
+[2025-02-06 17:39:45] [INFO] [app] [app.py] [Line: 162] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='1' AND length(username) > 3 AND id > 0 AND username LIKE 'a%'
+[2025-02-06 17:39:45] [WARNING] [app] [app.py] [Line: 170] Login failed for user: aaa
+[2025-02-06 17:42:28] [INFO] [app] [app.py] [Line: 232] Starting Flask app...
+[2025-02-06 17:42:48] [INFO] [app] [app.py] [Line: 128] Accessed home page
+[2025-02-06 17:42:52] [INFO] [app] [app.py] [Line: 122] Difficulty level set to: 9
+[2025-02-06 17:42:59] [INFO] [app] [app.py] [Line: 170] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='1' AND id > 5 AND length(password) > 5 AND password LIKE 'p%' AND id % 2 = 0 AND username != ''
+[2025-02-06 17:42:59] [WARNING] [app] [app.py] [Line: 178] Login failed for user: aaa
+[2025-02-06 17:43:12] [INFO] [app] [app.py] [Line: 170] Login attempt with query: SELECT * FROM users WHERE username='aaa' AND password='1' AND id % 2 = 0 AND username != '' AND id > 0 AND username LIKE 'a%' AND length(username) > 3 AND id > 5
+[2025-02-06 17:43:12] [WARNING] [app] [app.py] [Line: 178] Login failed for user: aaa
+[2025-02-06 17:43:16] [INFO] [app] [app.py] [Line: 192] Search query: SELECT username FROM users WHERE username LIKE '%test%' AND password LIKE 'p%' AND username LIKE 'a%' AND password != '' AND length(password) > 5 AND username != ''
+[2025-02-06 17:43:16] [INFO] [app] [app.py] [Line: 200] No search results found.
+[2025-02-06 17:43:33] [INFO] [app] [app.py] [Line: 192] Search query: SELECT username FROM users WHERE username LIKE '%test%' AND id > 5 AND username != ''
+[2025-02-06 17:43:33] [INFO] [app] [app.py] [Line: 197] Search results: ['test', 'test', 'test']

@@ -75,6 +75,23 @@ HOME_TEMPLATE = '''
 </head>
 <body>
     <h1>SQL Injection Test</h1>
+    <h2>Select Injection Difficulty Level</h2>
+    <form action="/set_difficulty" method="post">
+        <select name="difficulty">
+            <option value="0">Level 0</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+            <option value="7">Level 7</option>
+            <option value="8">Level 8</option>
+            <option value="9">Level 9</option>
+        </select>
+        <input type="submit" value="Set Difficulty">
+    </form>
+
     <h2>Login Form</h2>
     <form action="/login" method="post">
         Username: <input type="text" name="username"><br>
@@ -95,9 +112,15 @@ HOME_TEMPLATE = '''
         <input type="submit" value="Register">
     </form>
 </body>
-</html>
 '''
 
+# 设置难度级别
+@app.route('/set_difficulty', methods=['POST'])
+def set_difficulty():
+    global difficulty_level
+    difficulty_level = int(request.form.get('difficulty', 0))
+    logger.info(f"Difficulty level set to: {difficulty_level}")
+    return "Difficulty level set successfully."
 
 # 登录页面（存在SQL注入漏洞）
 @app.route('/')
@@ -105,15 +128,45 @@ def home():
     logger.info("Accessed home page")
     return render_template_string(HOME_TEMPLATE)
 
+# 添加全局变量来存储难度级别
+difficulty_level = 1
+
+def add_random_conditions(query, level):
+    import random
+    conditions = {
+        0: [],
+        1: ["id > 0"],
+        2: ["id > 0", "username != ''"],
+        3: ["id > 0", "username != ''", "password != ''"],
+        4: ["id > 0", "username != ''", "password != ''", "id % 2 = 0"],
+        5: ["id > 0", "username != ''", "password != ''", "id % 2 = 0", "length(username) > 3"],
+        6: ["id > 0", "username != ''", "password != ''", "id % 2 = 0", "length(username) > 3", "length(password) > 5"],
+        7: ["id > 0", "username != ''", "password != ''", "id % 2 = 0", "length(username) > 3", "length(password) > 5", "username LIKE 'a%'"],
+        8: ["id > 0", "username != ''", "password != ''", "id % 2 = 0", "length(username) > 3", "length(password) > 5", "username LIKE 'a%'", "password LIKE 'p%'"],
+        9: ["id > 0", "username != ''", "password != ''", "id % 2 = 0", "length(username) > 3", "length(password) > 5", "username LIKE 'a%'", "password LIKE 'p%'", "id > 5"]
+    }
+    if level in conditions:
+        return query + " AND " + " AND ".join(random.sample(conditions[level], random.randint(1, len(conditions[level]))))
+    else:
+        return query
+
+# 字符过滤函数
+def sanitize_input(input_string):
+    # 过滤掉一些危险字符
+    dangerous_chars = ["'", "\"", ";", "--", "/*", "*/", "@@", "CHAR", "NCHAR", "NVARCHAR", "VARCHAR", "ALTER", "CREATE", "DELETE", "DROP", "EXEC", "INSERT", "MERGE", "SELECT", "UPDATE", "UNION"]
+    for char in dangerous_chars:
+        input_string = input_string.replace(char, "")
+    return input_string
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form.get('username', '')
-    password = request.form.get('password', '')
+    username = sanitize_input(request.form.get('username', ''))
+    password = sanitize_input(request.form.get('password', ''))
     db = get_db()
     cursor = db.cursor()
     # 存在SQL注入漏洞的查询
     query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+    query = add_random_conditions(query, difficulty_level)
     logger.info(f"Login attempt with query: {query}")
     try:
         cursor.execute(query)
@@ -128,15 +181,14 @@ def login():
         logger.error(f"Error during login: {e}")
         return f"An error occurred: {e}"
 
-
-# 搜索功能（存在布尔盲注漏洞）
 @app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('query', '')
+    query = sanitize_input(request.args.get('query', ''))
     db = get_db()
     cursor = db.cursor()
     # 存在SQL注入漏洞的查询
     sql_query = f"SELECT username FROM users WHERE username LIKE '%{query}%'"
+    sql_query = add_random_conditions(sql_query, difficulty_level)
     logger.info(f"Search query: {sql_query}")
     try:
         cursor.execute(sql_query)
@@ -151,16 +203,15 @@ def search():
         logger.error(f"Error during search: {e}")
         return f"An error occurred: {e}"
 
-
-# 注册功能（存在时间盲注漏洞）
 @app.route('/register', methods=['POST'])
 def register():
-    username = request.form.get('username', '')
-    password = request.form.get('password', '')
+    username = sanitize_input(request.form.get('username', ''))
+    password = sanitize_input(request.form.get('password', ''))
     db = get_db()
     cursor = db.cursor()
     # 存在SQL注入漏洞的插入
     query = f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')"
+    query = add_random_conditions(query, difficulty_level)
     logger.info(f"Registration attempt with query: {query}")
     try:
         # 模拟时间盲注
